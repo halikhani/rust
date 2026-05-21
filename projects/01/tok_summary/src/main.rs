@@ -1,6 +1,7 @@
 use clap::Parser;
 use std::fs;
 use std::path::PathBuf;
+use tok_summary::vocab_size;
 
 #[derive(Parser)] // clap macro generates parsing logic for Args::parse() to read tok_summary path from command line
 #[command(name="tok_summary")]
@@ -27,15 +28,6 @@ fn main() {
     for t in special_tokens(&json, 5) {
         println!("  {t}");
     }
-}
-
-
-fn vocab_size(json: &serde_json::Value) -> usize {
-    json.get("model")
-        .and_then(|m| m.get("vocab"))
-        .and_then(|v| v.as_object())
-        .map(|a| a.len())
-        .unwrap_or(0) // if any steps fail, return 0
 }
 
 fn merge_count(json: &serde_json::Value) -> usize {
