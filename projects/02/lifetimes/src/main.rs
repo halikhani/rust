@@ -21,3 +21,6 @@ struct ImportantExcerpt<'a> {
 //     let first_sentence = novel.split('.').next().unwrap();
 //     let i = ImportantExcerpt { part: first_sentence };
 // }
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() >= y.len() { x } else { y }
+}
