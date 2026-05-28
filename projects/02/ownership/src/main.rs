@@ -35,52 +35,89 @@ fn main() {
 
     // println!("{r1}, {r2}, and {r3}");
 
-    let mut s2 = String::from("hello");
+    // let mut s2 = String::from("hello");
 
-    let r1 = &s2; // no problem
-    let r2 = &s2; // no problem
-    println!("{r1} and {r2}");
-    // Variables r1 and r2 will not be used after this point.
+    // let r1 = &s2; // no problem
+    // let r2 = &s2; // no problem
+    // println!("{r1} and {r2}");
+    // // Variables r1 and r2 will not be used after this point.
 
-    let r3 = &mut s2; // no problem
-    println!("{r3}");
+    // let r3 = &mut s2; // no problem
+    // println!("{r3}");
 
-    let mut s3 = String::from("hello world");
+    // let mut s3 = String::from("hello world");
 
-    let word = first_word(&s3);
+    // let word = first_word(&s3);
 
-    s3.clear(); // error!
+    // // s3.clear(); // error!
 
-    println!("the first word is: {word}");
-
-
-}
-
-fn calculate_length(s: &String) -> usize {
-    s.len()
-}
-
-fn change(some_string: &mut String) {
-    some_string.push_str(", world");
-}
+    // println!("the first word is: {word}");
 
 
-fn dangle() -> &String { // dangle returns a reference to a String
-
-    let s = String::from("hello"); // s is a new String
-
-    &s // we return a reference to the String, s
-} // Here, s goes out of scope and is dropped, so its memory goes away.
-  // Danger!
 
 
-fn first_word(s: &String) -> &str {
-    let bytes = s.as_bytes();
+    // into_iter vs iter vs iter_mut
+    let tokens = vec![
+        String::from("hello"),
+        String::from("world"),
+    ];
 
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[..i];
-        }
+    // a) move - consumes the vec, each item is an owned String
+    for token in tokens.into_iter() {
+        println!("{token}"); // token: String
     }
-    &s[..]
+
+    // tokens vec is gone here - cant use it anymore
+
+    // start fresh for b and c
+
+    let mut tokens = vec![
+        String::from("hello"),
+        String::from("world"),
+    ];
+
+    // b) borrow - Vec stays alive, each item is &String
+    for token in tokens.iter() {
+        println!("{token}"); // token: &String
+    }
+
+    // tokens vec is still alive here - can use it again
+
+    // c) mutate in place, each item is &mut String
+    for token in tokens.iter_mut() {
+        token.push('!');
+    }
+    println!("{tokens:?}"); // tokens: Vec<String>
+
+
+
 }
+
+// fn calculate_length(s: &String) -> usize {
+//     s.len()
+// }
+
+// fn change(some_string: &mut String) {
+//     some_string.push_str(", world");
+// }
+
+
+// fn dangle() -> &String { // dangle returns a reference to a String
+
+//     let s = String::from("hello"); // s is a new String
+
+//     &s // we return a reference to the String, s
+// } // Here, s goes out of scope and is dropped, so its memory goes away.
+//   // Danger!
+
+
+// fn first_word(s: &String) -> &str {
+//     let bytes = s.as_bytes();
+
+//     for (i, &item) in bytes.iter().enumerate() {
+//         if item == b' ' {
+//             return &s[..i];
+//         }
+//     }
+//     &s[..]
+// }
