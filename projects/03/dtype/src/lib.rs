@@ -11,6 +11,7 @@ pub enum DType {
     I8,
     U8,
     I4,
+    F4,
 }
 
 impl DType {
@@ -20,6 +21,7 @@ impl DType {
             Self::F16 | Self::BF16 => 16,
             Self::F8E4M3 | Self::F8E5M2 | Self::I8 | Self::U8 => 8,
             Self::I4 => 4,
+            Self::F4 => 4,
         }
     }
 
@@ -33,6 +35,7 @@ impl DType {
             "i8" => Some(Self::I8),
             "u8" => Some(Self::U8),
             "i4" | "int4" => Some(Self::I4),
+            "f4" | "float4" => Some(Self::F4),
             _ => None,
         }
     }
@@ -47,6 +50,7 @@ impl DType {
             Self::I8 => "i8",
             Self::U8 => "u8",
             Self::I4 => "i4",
+            Self::F4 => "f4",
         }
     }
 }
@@ -82,11 +86,12 @@ mod tests {
         assert_eq!(DType::I8.size_in_bits(), 8);
         assert_eq!(DType::U8.size_in_bits(), 8);
         assert_eq!(DType::I4.size_in_bits(), 4);
+        assert_eq!(DType::F4.size_in_bits(), 4);
     }
 
     #[test]
     fn parse_and_display_roundtrip() {
-        for dt in [DType::F32, DType::F16, DType::BF16, DType::F8E4M3, DType::F8E5M2, DType::I8, DType::U8, DType::I4] {
+        for dt in [DType::F32, DType::F16, DType::BF16, DType::F8E4M3, DType::F8E5M2, DType::I8, DType::U8, DType::I4, DType::F4] {
             let s = dt.to_string();
             assert_eq!(DType::parse_str(&s), Some(dt));
         }
