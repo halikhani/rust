@@ -1,13 +1,17 @@
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     // note on lifetimes: we basically say set the lifetime ofthe return value to be the same as the lifetime of the contents parameter
     // since we are gonna return a slice of the contents, we need to tell the compiler that the return value will live as long as the contents parameter does
-    let mut results = Vec::new();
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
-    results
+    // let mut results = Vec::new();
+    // for line in contents.lines() {
+    //     if line.contains(query) {
+    //         results.push(line);
+    //     }
+    // }
+    // results
+
+    // NOTE: we can use the lines method to get an iterator over the lines of the contents instead of 
+    // an intermediate results vector
+    contents.lines().filter(|line| line.contains(query)).collect()
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
