@@ -22,9 +22,16 @@ impl<T: Copy + std::ops::Add<Output = T>> Tensor<T> {
         let data = self.data
             .iter()
             .zip(other.data.iter())
-            .map(|(&a, &b)| a + b) // why &? because we want to borrow the data from the tensors
+            .map(|(&a, &b)| a + b) // why &? .iter() gives &T; the & in (&a, &b) dereferences/copies those into T so we can use +
             .collect();
 
+        // self.data:  [1, 2, 3]
+        // other.data: [4, 5, 6]
+        // iter + zip:
+        //   (&1, &4)  →  |(&a,&b)| a+b  →  5
+        //   (&2, &5)  →                   →  7
+        //   (&3, &6)  →                   →  9
+        // collect() → Vec<T> = [5, 7, 9]
         Self {
             data,
             shape: self.shape.clone(),
