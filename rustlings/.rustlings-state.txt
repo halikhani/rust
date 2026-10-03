@@ -1,6 +1,6 @@
 DON'T EDIT THIS FILE!
 
-primitive_types5
+vecs1
 
 intro1
 intro2
@@ -10,7 +10,6 @@ variables3
 variables4
 variables5
 variables6
-functions1
 functions2
 functions3
 functions4
@@ -22,3 +21,5 @@ primitive_types1
 primitive_types2
 primitive_types3
 primitive_types4
+primitive_types5
+primitive_types6
